@@ -15,6 +15,14 @@ import requests
 from util.aes_help import  encrypt_data, decrypt_data
 import util.zepp_helper as zeppHelper
 
+# 每个账号独立的步数范围（顺序对应 CONFIG 中 USER 以 # 分隔的顺序）
+# 账号1(164****.com): 17500~18500  账号2(249****.com): 9000~11000
+STEP_RANGES = [
+    (17500, 18500),
+    (9000, 11000),
+]
+
+
 # 获取默认值转int
 def get_int_value_default(_config: dict, _key, default):
     _config.setdefault(_key, default)
@@ -238,7 +246,8 @@ def run_single_account(total, idx, user_mi, passwd_mi):
     log_str = f"[{format_now()}]\n{idx_info}账号：{desensitize_user_name(user_mi)}\n"
     try:
         runner = MiMotionRunner(user_mi, passwd_mi)
-        exec_msg, success = runner.login_and_post_step(min_step, max_step)
+        lo, hi = STEP_RANGES[idx] if idx is not None and idx < len(STEP_RANGES) else (min_step, max_step)
+        exec_msg, success = runner.login_and_post_step(lo, hi)
         log_str += runner.log_str
         log_str += f'{exec_msg}\n'
         exec_result = {"user": user_mi, "success": success,
