@@ -16,10 +16,10 @@ from util.aes_help import  encrypt_data, decrypt_data
 import util.zepp_helper as zeppHelper
 
 # 每个账号独立的步数范围（顺序对应 CONFIG 中 USER 以 # 分隔的顺序）
-# 账号1(164****.com): 17500~18500  账号2(249****.com): 9000~11000
+# 账号1(164****.com): 18000~20000  账号2(249****.com): 10000~12000
 STEP_RANGES = [
-    (17500, 18500),
-    (9000, 11000),
+    (18000, 20000),
+    (10000, 12000),
 ]
 
 
